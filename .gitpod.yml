@@ -11,7 +11,7 @@ tasks:
       sudo pip3 install streamlit
       sudo pip install python-git
       sudo pip3 install streamlit-autorefresh
-      sudo apt install -y mosquitto
+      sudo apt install mosquitto
       sudo apt install mosquitto-clients
       sudo service mosquitto start
       sudo service mosquitto status
