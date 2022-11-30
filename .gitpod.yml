@@ -1,0 +1,24 @@
+# List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - before: echo ' beggin commands'
+    init: 
+      npm install -g json
+      python -m pip install scipy
+      sudo pip3 install streamlit
+      sudo pip3 install streamlit-autorefresh
+      sudo apt install -y mosquitto
+      sudo apt install mosquitto-clients
+      sudo service mosquitto start
+      sudo service mosquitto status
+      sudo pip3 install paho-mgtt
+      git clone https://github.com/eclipse/paho.mqtt.python.git
+      cd paho.mqtt.python
+      python setup.py install
+      cd.. 
+# runs during prebuild
+    command: echo 'start script'
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 3000
+    onOpen: open-preview
