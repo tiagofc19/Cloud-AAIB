@@ -4,9 +4,10 @@ tasks:
   - name: Terminal 1
     before: echo 'begin commands'
     init: 
-      npm install -g npm@9.1.2
+      #npm install -g npm@9.1.2
       git clone https://github.com/eclipse/paho.mqtt.python.git
       cd paho.mqtt.python
+      cd -
       python setup.py install
       python pip install scipy
       sudo pip3 install streamlit
