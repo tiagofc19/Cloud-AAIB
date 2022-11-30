@@ -7,8 +7,8 @@ tasks:
       sudo pip3 install streamlit
       sudo pip install python-git
       git clone https://github.com/eclipse/paho.mqtt.python.git
-      cd paho.mqtt.python
-      python setup.py install
+      #cd paho.mqtt.python
+      #python setup.py install
       #sudo pip3 install streamlit-autorefresh
       #sudo apt install -y mosquitto
       #sudo apt install mosquitto-clients
