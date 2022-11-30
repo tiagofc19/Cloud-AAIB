@@ -6,15 +6,16 @@ tasks:
       #python -m pip install scipy
       sudo pip3 install streamlit
       sudo pip install python-git
-      git clone https://github.com/eclipse/paho.mqtt.python.git
+      sudo pip3 install streamlit-autorefresh
+      sudo apt install -y mosquitto
+      sudo apt install mosquitto-clients
+      sudo service mosquitto start
+      sudo service mosquitto status
+      sudo pip3 install paho-mgtt
+      #git clone https://github.com/eclipse/paho.mqtt.python.git
       #cd paho.mqtt.python
       #python setup.py install
-      #sudo pip3 install streamlit-autorefresh
-      #sudo apt install -y mosquitto
-      #sudo apt install mosquitto-clients
-      #sudo service mosquitto start
-      #sudo service mosquitto status
-      #sudo pip3 install paho-mgtt
+      
 
 # runs during prebuild
     command: echo 'start script'
