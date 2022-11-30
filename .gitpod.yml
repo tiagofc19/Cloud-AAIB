@@ -4,7 +4,7 @@ tasks:
   - name: Terminal 1
     before: echo 'begin commands'
     init: 
-      npm install 
+      npm install -g npm@9.1.2
       git clone https://github.com/eclipse/paho.mqtt.python.git
       cd paho.mqtt.python
       python setup.py install
