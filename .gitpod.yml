@@ -14,7 +14,7 @@ tasks:
       sudo apt install mosquitto-clients
       sudo service mosquitto start
       sudo service mosquitto status
-      sudo pip3 install paho-mgtt
+      sudo pip3 install paho-mqtt
       
       
 
