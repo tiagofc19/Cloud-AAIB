@@ -9,16 +9,19 @@ def on_connect(mqttc, obj, flags, rc):
 
 def on_message(mqttc, obj, msg):
     topic=msg.topic
-    m_decode=str(msg.payload.decode("utf-8","ignore"))
-    print("data Received type",type(m_decode))
-    print("data Received",m_decode)
-    print("Converting from Json to Object")
-    m_in=json.loads(m_decode) 
-    print(type(m_in))
-
-    with open(audios.csv, 'w') as file:
-            for x in m_in:
-                file.write(str(x)+', ')
+    print(msg.payload.decode("utf-8","ignore"))
+    y = msg.payload.decode("utf-8","ignore")
+    #m_decode=str(msg.payload.decode("utf-8","ignore"))
+    #print("data Received type",type(m_decode))
+    #print("data Received",m_decode)
+    #print("Converting from Json to Object")
+    #m_in=json.loads(m_decode) 
+    #print(type(m_in))
+    #if y == 'new':
+    #    file = open('audios.csv', 'a')
+    #    file.close()
+    with open('audios.csv', 'a') as file:
+        file.write(str(y)+', ')
     file.close()
 
 def on_publish(mqttc, obj, mid):
@@ -40,7 +43,7 @@ mqttc.on_connect = on_connect
 mqttc.on_subscribe = on_subscribe
 # Uncomment to enable debug messages
 # mqttc.on_log = on_log
-mqttc.connect("test.mosquitto.org", 1883, 60)
+mqttc.connect("mqtt.eclipseprojects.io", 1883, 60)
 mqttc.subscribe("AAIB-LT", 0)
 
 #rc = 0
