@@ -20,7 +20,6 @@ def on_message(mqttc, obj, msg):
                 file.write(str(x)+', ')
     file.close()
 
-
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
 
