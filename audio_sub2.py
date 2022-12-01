@@ -1,5 +1,6 @@
 
 import paho.mqtt.client as mqtt
+import json
 
 
 def on_connect(mqttc, obj, flags, rc):
@@ -36,7 +37,7 @@ mqttc = mqtt.Client()
 mqttc.on_message = on_message
 mqttc.on_connect = on_connect
 #mqttc.on_publish = on_publish
-#mqttc.on_subscribe = on_subscribe
+mqttc.on_subscribe = on_subscribe
 # Uncomment to enable debug messages
 # mqttc.on_log = on_log
 mqttc.connect("test.mosquitto.org", 1883, 60)
