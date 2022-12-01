@@ -31,7 +31,6 @@ tasks:
       cd ..
     command: python audio_sub2.py
 
-# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
 
 ports:
 - name: Streamlit
