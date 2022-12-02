@@ -11,8 +11,12 @@ from io import StringIO
 from os import remove
 import scipy
 
-
-st.title('AAIB - Audio Feature Extraction')
+col1, col2 = st.columns([8, 1])
+with col1:
+    st.title('AAIB - Audio Feature Extraction')
+with col2:
+    if st.button("🎈"):
+        st.balloons()
 
 
 with st.sidebar:
@@ -31,8 +35,6 @@ with st.sidebar:
                 time.sleep(13)
                 st.success('Done!')
 
-    
-   
 
 client = mqtt.Client("record_aaib")
 
@@ -41,8 +43,6 @@ client.connect("mqtt.eclipseprojects.io", 1883, 60)
 
 global y
 
-
-#print('ola')
 if uploaded_file is not None:
 
     bytes_data = uploaded_file.getvalue()
@@ -85,28 +85,19 @@ else:
 fs = 44100
 sr = 22050
 step = 1/fs
-#t = np.arange(0, (len(y)*step), step)
 
 st.markdown("This is what your audio file looks like.")
 # Plot audio
-#st.line_chart(y) 
 fig1 = plt.figure(figsize=(20, 10))
 plt.xlim(0, (len(y)*step))
-plt.xlabel('Time, s')
+plt.xlabel("Time, s")
 plt.grid('on')
 librosa.display.waveshow(y, sr=sr, color='#DAF7A6')
-#fig, ax = plt.subplots(figsize=(20, 5))  
-#ax.grid('on')
-#ax.plot(t, y)
-#ax.set_xlim(0, (len(y)*step))
-#ax.set_xlabel('Time, s')
 st.pyplot(fig1)
 
 #Play audio
 st.markdown("Listen to the audio file.")
 st.audio(y, sample_rate=44100)
-
-
 
 st.markdown("Here's the audio's spectrogram.")
 # Plot spectogram
@@ -123,7 +114,6 @@ st.markdown("Here's the 1D frequency spectrum of the audio.")
 fft_spectrum = np.fft.rfft(y)
 freq = np.fft.rfftfreq(y.size, d=1./fs)
 
-#max_val = freq[-1]
 max_freq = st.slider('Select maximum frequency to plot.', 0, 2000, 1000)
 
 fft_spectrum_abs = np.abs(fft_spectrum)
@@ -137,10 +127,3 @@ st.pyplot(fig3)
 
 freq_str = 'Most prominent frequency: '+str(round(freq[np.argmax(fft_spectrum_abs)],2))+' Hz'
 st.markdown(freq_str)
-
-
-st.balloons()
-
-    
-
-#st_autorefresh(2000)
