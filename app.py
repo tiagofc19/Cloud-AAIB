@@ -11,6 +11,10 @@ from io import StringIO
 from os import remove
 import scipy
 
+client = mqtt.Client("record_aaib")
+client.connect("mqtt.eclipseprojects.io", 1883, 60)
+
+
 col1, col2 = st.columns([8, 1])
 with col1:
     st.title('AAIB - Audio Feature Extraction')
@@ -18,10 +22,6 @@ with col2:
     if st.button("🎈"):
         st.balloons()
 
-client = mqtt.Client("record_aaib")
-
-
-client.connect("mqtt.eclipseprojects.io", 1883, 60)
 
 with st.sidebar:
     
@@ -40,9 +40,8 @@ with st.sidebar:
                 st.success('Done!')
 
 
-
-
 global y
+y = np.array([0.0])
 
 if uploaded_file is not None:
 
