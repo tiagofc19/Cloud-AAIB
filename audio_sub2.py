@@ -9,20 +9,21 @@ def on_connect(mqttc, obj, flags, rc):
 
 def on_message(mqttc, obj, msg):
     topic=msg.topic
-    print(msg.payload.decode("utf-8","ignore"))
-    y = msg.payload.decode("utf-8","ignore")
-    #m_decode=str(msg.payload.decode("utf-8","ignore"))
+    #print(msg.payload.decode("utf-8","ignore"))
+    #y = msg.payload.decode("utf-8","ignore")
+    m_decode=str(msg.payload.decode("utf-8","ignore"))
     #print("data Received type",type(m_decode))
-    #print("data Received",m_decode)
+    print("data Received",m_decode)
     #print("Converting from Json to Object")
-    #m_in=json.loads(m_decode) 
-    #print(type(m_in))
+    m_in=json.loads(m_decode) 
+    print(type(m_in))
     #if y == 'new':
     #    file = open('audios.csv', 'a')
     #    file.close()
-    with open('audios.csv', 'a') as file:
-        file.write(str(y)+', ')
-    file.close()
+    with open('audios.csv', 'w') as file:
+        for x in m_in:
+            file.write(str(x)+', ')
+        file.write('\n')
 
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
