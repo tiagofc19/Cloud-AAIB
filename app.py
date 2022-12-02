@@ -62,21 +62,21 @@ if uploaded_file is not None:
 else:  
     f = open('audios.txt', 'r')
     l = len(f.readlines())
-    print(l)
     f.close()      
 
     with open('audios.txt', 'r') as f:
         try:
-            if l == 1:
+            if l <= 1:
                 run = 0
+                #st_autorefresh()
             else: 
                 with st.sidebar:
                     with col2:
                         run = st.selectbox(' ', [i for i in range(1,l+1)])-1
                 #run = st.slider('Select audio to plot', 1, l, l)-1
-                sig = f.readlines()[run]
-                x = np.array(sig.strip('\n').split(","))
-                y = x[:-1].astype(float)
+            sig = f.readlines()[run]
+            x = np.array(sig.strip('\n').split(","))
+            y = x[:-1].astype(float)
         except:
             y = np.array([0.0])
         f.close()

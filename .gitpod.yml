@@ -4,8 +4,8 @@ tasks:
     init:  |
       npm install -g json
       python -m pip install scipy  
-      sudo apt-get install libsndfile1-dev
       sudo pip3 install librosa 
+      sudo apt-get install libsndfile1-dev
       sudo pip3 install streamlit
       sudo pip3 install streamlit-autorefresh
       sudo pip3 install matplotlib
