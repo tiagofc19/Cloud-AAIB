@@ -1,6 +1,7 @@
 
 import paho.mqtt.client as mqtt
 import json
+from csv import writer
 
 
 def on_connect(mqttc, obj, flags, rc):
@@ -14,17 +15,25 @@ def on_message(mqttc, obj, msg):
     #y = msg.payload.decode("utf-8","ignore")
     m_decode=str(msg.payload.decode("utf-8","ignore"))
     #print("data Received type",type(m_decode))
-    print("data Received",m_decode)
+    #print("data Received",m_decode)
     #print("Converting from Json to Object")
     m_in=json.loads(m_decode) 
     print(type(m_in))
     #if y == 'new':
     #    file = open('audios.csv', 'a')
     #    file.close()
-    with open('audios.csv', 'w') as file:
-        for x in m_in:
-            file.write(str(x)+', ')
-        file.write('\n')
+
+    with open('audios.txt', 'a') as f:
+        for num in m_in:
+            f.write(str(num)+',')
+        f.write('\n')
+        f.close()
+
+    #with open('audios.csv', 'a') as f:
+    #    writer_object = writer(f)
+    #    writer_object.writerow(m_in)
+    #    f.close()
+    
           
 
 def on_publish(mqttc, obj, mid):
