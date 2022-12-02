@@ -7,6 +7,7 @@ def on_connect(mqttc, obj, flags, rc):
     print("rc: " + str(rc))
 
 
+
 def on_message(mqttc, obj, msg):
     topic=msg.topic
     #print(msg.payload.decode("utf-8","ignore"))
@@ -24,6 +25,7 @@ def on_message(mqttc, obj, msg):
         for x in m_in:
             file.write(str(x)+', ')
         file.write('\n')
+          
 
 def on_publish(mqttc, obj, mid):
     print("mid: " + str(mid))
