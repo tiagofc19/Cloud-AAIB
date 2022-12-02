@@ -7,25 +7,32 @@ import time
 from streamlit_autorefresh import st_autorefresh
 import matplotlib.pyplot as plt
 import librosa.display
+from io import StringIO
+from os import remove
+import scipy
 
 
 st.title('AAIB - Audio Feature Extraction')
 
 
+with st.sidebar:
+    
+    st.header("Choose or record an audio file.")
+    col1, col2 = st.columns(2)
+    uploaded_file = st.file_uploader("Choose a .wav file.",type = ['.wav'])
+    
+    with col1:
+        st.write(' ')
+        st.write(' ')
+        if st.button('Record'):
+            client.publish("AAIB-TL", payload="start")
+            uploaded_file = None
+            with st.spinner('Wait for it...'):
+                time.sleep(13)
+                st.success('Done!')
 
-st.header("Choose or record an audio file.")
-
-if st.button('Record'):
-    client.publish("AAIB-TL", payload="start")
-    uploaded_file = None
-    with st.spinner('Wait for it...'):
-        time.sleep(13)
-        st.success('Done!')
-
-uploaded_file = st.file_uploader(" ")
+    
    
-    
-    
 
 client = mqtt.Client("record_aaib")
 
@@ -37,23 +44,25 @@ global y
 
 #print('ola')
 if uploaded_file is not None:
-    print(uploaded_file)
-    dataframe = pd.read_csv(uploaded_file)
-    print(dataframe)
-    y = dataframe.iloc[0].to_numpy()
-    print('ola2')
-    
-    #with open(uploaded_file, 'r') as f:
-    #try:
-        #sig = f.readlines()[-1]
-        #x = np.array(sig.split(", "))
-        #y = x[:-1].astype(float)
-    #st.line_chart(y)  
-    #except:
-     #   st.line_chart([])
+
+    bytes_data = uploaded_file.getvalue()
+    filename = 'uploaded_file.wav'
+    try:
+        with open(filename, mode='bx') as f:
+            f.write(bytes_data)
+        f.close()
+    except FileExistsError:
+        remove(filename)
+        with open(filename, mode='bx') as f:
+            f.write(bytes_data)
+        f.close()
+
+    y, sr = librosa.load(filename, sr=44100)
+
 else:  
     f = open('audios.txt', 'r')
     l = len(f.readlines())
+    print(l)
     f.close()      
 
     with open('audios.txt', 'r') as f:
@@ -61,12 +70,15 @@ else:
             if l == 1:
                 run = 0
             else: 
-                run = st.slider('Select audio to plot', 1, l, l)-1
+                with st.sidebar:
+                    with col2:
+                        run = st.selectbox(' ', [i for i in range(1,l+1)])-1
+                #run = st.slider('Select audio to plot', 1, l, l)-1
                 sig = f.readlines()[run]
                 x = np.array(sig.strip('\n').split(","))
                 y = x[:-1].astype(float)
         except:
-            y = np.array([])
+            y = np.array([0.0])
         f.close()
 
 # Load audio info
@@ -74,8 +86,6 @@ fs = 44100
 sr = 22050
 step = 1/fs
 #t = np.arange(0, (len(y)*step), step)
-
-
 
 st.markdown("This is what your audio file looks like.")
 # Plot audio
@@ -117,7 +127,7 @@ freq = np.fft.rfftfreq(y.size, d=1./fs)
 max_freq = st.slider('Select maximum frequency to plot.', 0, 2000, 1000)
 
 fft_spectrum_abs = np.abs(fft_spectrum)
-fig3 = plt.figure(figsize=(20, 5))
+fig3 = plt.figure(figsize=(20, 10))
 plt.plot(freq, fft_spectrum_abs, color='#DAF7A6')
 plt.xlabel("Frequency, Hz")
 plt.ylabel("Amplitude")
