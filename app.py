@@ -18,6 +18,10 @@ with col2:
     if st.button("🎈"):
         st.balloons()
 
+client = mqtt.Client("record_aaib")
+
+
+client.connect("mqtt.eclipseprojects.io", 1883, 60)
 
 with st.sidebar:
     
@@ -36,10 +40,7 @@ with st.sidebar:
                 st.success('Done!')
 
 
-client = mqtt.Client("record_aaib")
 
-
-client.connect("mqtt.eclipseprojects.io", 1883, 60)
 
 global y
 
